@@ -47,8 +47,8 @@ soup = BeautifulSoup(html, 'lxml')
 text = ''
 doc = None
 
-
-# articleCont 와 id 를 
+# 가져오는 URL : http://finance.naver.com/news/news_read.nhn?article_id=0000403170&office_id=366&mode=LSS2D&type=0&section_id=101&section_id2=258&section_id3=&date=20180406&page=1
+# class:articleCont, id:content
 item = soup.find("div", class_='articleCont')
 text = text + str(item.find_all(text=True))
 text = ast.literal_eval(text)
