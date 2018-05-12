@@ -19,12 +19,11 @@ df = pd.read_csv(url,sep=',')
 stud_alcoh1 = df.loc[: , "school":"guardian"]
 
 #두가지 column 만 가져오기 
-stud_alcoh2 = df[['school', 'guardian']]
+stud_alcoh2 = df[['school', 'guardian','age']]
 
 
 ############################################################
 # 여러가지 필터링 방법
-
 #조건을 걸어 부분 집합 추출 
 #more_than_16 이라는 조건에 맞는 row 들만 저장된 DataFrame 이 생성된다. 
 more_than_16 = stud_alcoh1[stud_alcoh1.age > 16]
@@ -43,4 +42,5 @@ not_T_status = stud_alcoh1[(stud_alcoh1['Pstatus'] != 'T')]
 contains_G = stud_alcoh1[stud_alcoh1.famsize.str.contains('G')] # startswith 등 활용가능
 
 #관심있는 컬럼 3개만 가져오기 
+#row 를 is in 을 사용해 필터링함 'at home', 'services' 
 mother_job = stud_alcoh1.loc[stud_alcoh1.Mjob.isin(['at_home', 'services']), ['Mjob','Fjob', 'reason']]

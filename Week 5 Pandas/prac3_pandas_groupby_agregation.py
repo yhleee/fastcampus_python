@@ -3,7 +3,6 @@
 Created on Fri Apr 13 23:36:06 2018
 
 @author: yhlee
-@author: yhlee
 fastcampus 데이터분석 강의자료 study (week5)
 
 pandas 의 filter- groupby_aggregation 을 연습 
