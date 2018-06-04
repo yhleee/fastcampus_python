@@ -27,35 +27,25 @@ df_one_hot_encoded = pd.get_dummies(titanic.embarked)
 
 titanic = pd.concat([titanic, df_one_hot_encoded], axis=1)
 
+#함수를 사용하지 않고 해보기 
 
-def valid_features(col_name):
-    g = sns.FacetGrid(titanic, col='survived')
-    g.map(plt.hist, col_name, bins=20)
+#Survive 한 사람들 list 
+titanic_survived = titanic[titanic['survived']==1]
+#Survive List 에서 age만 array 로 변경 
+titanic_survived_static = np.array(titanic_survived['age'])
 
-    titanic_survived = titanic[titanic['survived']==1]
-    titanic_survived_static = np.array(titanic_survived[col_name])
-    print("data length is", '%.2f' % len(titanic_survived_static))
-    print("data mean is", '%.2f' % np.mean(titanic_survived_static))
-    print("data variance is", '%.2f' % np.var(titanic_survived_static))
-    print("data std is", '%.2f' % np.std(titanic_survived_static))
-    print("data max is", '%.2f' % np.max(titanic_survived_static))
-    print("data min is", '%.2f' % np.min(titanic_survived_static))
-    print("data median is", '%.2f' % np.median(titanic_survived_static))
-    print("-----------------------")
+#Not Survive List 
+titanic_n_survived = titanic[titanic['survived']==0]
+#Not Survive List 에서 age만 array 로 변경 
+titanic_n_survived_static = np.array(titanic_n_survived['age'])
+#숫자 값 외에 name 으로 하면 error 발생 
 
-    titanic_n_survived = titanic[titanic['survived']==0]
-    titanic_n_survived_static = np.array(titanic_n_survived[col_name])
-    print("data length is", '%.2f' % len(titanic_n_survived_static))
-    print("data mean is", '%.2f' % np.mean(titanic_n_survived_static))
-    print("data variance is", '%.2f' % np.var(titanic_n_survived_static))
-    print("data std is", '%.2f' % np.std(titanic_n_survived_static))
-    print("data max is", '%.2f' % np.max(titanic_n_survived_static))
-    print("data min is", '%.2f' % np.min(titanic_n_survived_static))
-    print("data median is", '%.2f' % np.median(titanic_n_survived_static))
-    print("-----------------------")
+from scipy import stats
+tTestResult = stats.ttest_ind(titanic_survived['age'], titanic_n_survived['age'])
 
-    tTestResult = stats.ttest_ind(titanic_survived[col_name], titanic_n_survived[col_name])
-    tTestResultDiffVar = stats.ttest_ind(titanic_survived[col_name], titanic_n_survived[col_name], equal_var=False)
+tTestResultTrue= stats.ttest_ind(titanic_survived['age'], titanic_n_survived['age'],equal_var=True)
+tTestResultDiffVar = stats.ttest_ind(titanic_survived['age'], titanic_n_survived['age'], equal_var=False)
 
-    print("The t-statistic and p-value assuming equal variances is %.3f and %.3f." % tTestResult)
-    print("The t-statistic and p-value not assuming equal variances is %.3f and %.3f" % tTestResultDiffVar)
+print (tTestResult)
+print (tTestResultTrue)
+print (tTestResultDiffVar)
